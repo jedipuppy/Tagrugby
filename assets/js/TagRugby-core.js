@@ -600,8 +600,8 @@ class Game {
 		try {
 			let movablelist = movablelistFunc(this.pos.copy(), this.turn, this.select, this.tagged); //動ける場所のリストを作成
 			let passlist = passlistFunc(this.pos.copy(), this.turn, this.select, this.ball); //動ける場所のリストを作成
-			} catch (err) {
-			document.getElementById('poserror').innerHTML =  "初期位置の書き方が正しくありません。" + err;
+		} catch (err) {
+			document.getElementById('poserror').innerHTML = "初期位置の書き方が正しくありません。" + err;
 		}
 		try {
 			[nextmove, eval_list] = rugby_AI[AI_name](this.pos, this.turn, this.select, this.ball, this.tagged); //AIの呼び出し、盤面から最善手及びそれぞれの評価値を返す
@@ -856,6 +856,15 @@ function init() {
 // 初期盤面からゲームをやり直し
 //----------------------------------------
 function rematch() {
+	rematchInit();
+	if (Role[arrayTurn(game.turn)] != 'human') {
+		AIthinkFlag = 1;
+		game.AIturn();
+	}
+
+}
+
+function rematchInit() {
 	document.getElementById('result').innerHTML = '';
 	AIthinkFlag = 0;
 	game.turn = 1;
@@ -867,26 +876,19 @@ function rematch() {
 	game.tag = MAXTAG;
 	document.getElementById('tag').innerHTML = game.tag;
 	draw(ctx, canvas);
-
-	if (Role[arrayTurn(game.turn)] != 'human') {
-		AIthinkFlag = 1;
-		game.AIturn();
-	}
-
 }
-
 //----------------------------------------
 // コンフィグ設定ボタンをおした時の動作
 //----------------------------------------
 function config() {
 	try {
-	BOARDSIZE = parseInt(document.ConfigForm.boardsize.value);
-	attack_num = parseInt(document.ConfigForm.attackNum.value);
-	defense_num = parseInt(document.ConfigForm.defenseNum.value);
-	MAXTAG = parseInt(document.ConfigForm.tag_num.value);
-	POSATTACK = [];
-	POSDEFENSE = [];
-	//初期配置を読み込み
+		BOARDSIZE = parseInt(document.ConfigForm.boardsize.value);
+		attack_num = parseInt(document.ConfigForm.attackNum.value);
+		defense_num = parseInt(document.ConfigForm.defenseNum.value);
+		MAXTAG = parseInt(document.ConfigForm.tag_num.value);
+		POSATTACK = [];
+		POSDEFENSE = [];
+		//初期配置を読み込み
 		eval(pos_editor.getValue());
 	} catch (err) {
 		document.getElementById('poserror').innerHTML = "初期位置の書き方が正しくありません。" + err;
@@ -894,6 +896,7 @@ function config() {
 
 	POSATTACK = POSATTACK.slice(0, attack_num);
 	POSDEFENSE = POSDEFENSE.slice(0, defense_num);
+	rematchInit();
 }
 
 //----------------------------------------
@@ -1307,9 +1310,9 @@ function upload() {
 		[nextmove_temp, eval_list_temp] = rugby_AI['AttackAI'](game.pos, game.turn, game.select, game.ball, game.tagged); //AIの呼び出し、盤面から最善手及びそれぞれの評価値を返す
 		let filename = document.CodingForm.AIname.value;
 		execPost(upload.php, filename, "rugby_AI." + filename + "= function(pos,turn,select,ball,tagged){" + editor.getValue() + " return return_arr;}", "function " + filename + "pos(){" + pos_editor.getValue() + "}");
-	
+
 	} catch (err) {
-		document.getElementById('uploaderror').innerHTML =  "AIのコードか初期位置の書き方が正しくありません。" + err;
+		document.getElementById('uploaderror').innerHTML = "AIのコードか初期位置の書き方が正しくありません。" + err;
 	}
 }
 

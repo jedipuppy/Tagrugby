@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
         <meta charset="UTF-8" />
         <title>TagRugby</title>
@@ -8,7 +9,8 @@
 
         <!-- Bootstrap 4 CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-                integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+                integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+                crossorigin="anonymous">
         <link rel="stylesheet" href="assets/css/custom.css">
 
         <!-- CodeMirror -->
@@ -25,8 +27,8 @@
         <div class="contents">
                 <nav class="navbar navbar-dark bg-dark">
                         <a class="navbar-brand" href="#">
-                                <img src="assets/img/rugby-ball.svg" width="20" height="30" class="d-inline-block align-top"
-                                        alt="">
+                                <img src="assets/img/rugby-ball.svg" width="20" height="30"
+                                        class="d-inline-block align-top" alt="">
                                 TagRugby AI Platform
                         </a>
                 </nav>
@@ -74,7 +76,8 @@
                                         </div>
 
                                         <div class="form-group-sm col-sm-2 config-submit">
-                                                <button type="button" class="btn btn-primary" onclick="config()">設定</button>
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="config()">設定</button>
                                         </div>
                                 </div>
                         </form>
@@ -113,7 +116,8 @@
                                                 </select>
                                         </div>
                                         <div class="form-group-sm col-sm-3 config-submit">
-                                                <button type="button" class="btn btn-primary" onclick="restart()">設定</button>
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="restart()">設定</button>
                                         </div>
                                         <div class="form-group-sm col-sm-3">
                                                 <label for="ana_role" class="col-form-label">解析用AI</label>
@@ -127,7 +131,8 @@
                                                 </select>
                                         </div>
                                         <div class="form-group-sm col-sm-3 config-submit">
-                                                <button type="button" class="btn btn-primary" onclick="analysis()">解析</button>
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="analysis()">解析</button>
                                         </div>
                                 </div>
                         </form>
@@ -151,20 +156,20 @@
                 <div class="codingarea shadow-sm">
                         <form name="CodingForm">
                                 <div class="form-group-sm">
-                                        <label for="attackAIfunc">初期配置の設定のコード</label>
+                                        <label for="initial_pos">初期配置の設定のコード</label>
                                         <div class="param" id="poserror" style="color:#C44A48"></div>
                                         <textarea class="form-control" name="initial_pos" rows="20"></textarea>
                                 </div>
                                 <div class="form-group-sm col-sm-3 config-submit">
                                         <button type="button" class="btn btn-primary" onclick="config()">設定</button>
                                 </div>
-                               <div class="form-group-sm coding-form">
+                                <div class="form-group-sm coding-form">
                                         <label for="attackAIfunc">AttackAIのコード</label>
                                         <div class="param" id="codeerror" style="color:#C44A48"></div>
                                         <textarea class="form-control" name="attackAIfunc" rows="20"></textarea>
                                 </div>
                                 <div class="form-row">
-                                                <div class="param" id="uploaderror" style="color:#C44A48"></div>
+                                        <div class="param" id="uploaderror" style="color:#C44A48"></div>
                                         <div class="form-group-sm col-sm-3">
 
                                                 <label for="AIname" class="col-form-label">AIの名前</label>
@@ -203,7 +208,8 @@
                                                 </select>
                                         </div>
                                         <div class="form-group-sm col-sm-3 config-submit">
-                                               <button type="button" class="btn btn-primary" onclick="upload()">登録</button>
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="upload()">登録</button>
                                         </div>
                                 </div>
                 </div>
