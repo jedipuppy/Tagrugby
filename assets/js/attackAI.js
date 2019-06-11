@@ -5,7 +5,7 @@
 	let C = 1; //ボールを持っているプレイヤーとの縦の距離
 	let D = 1; //ボールを持っているプレイヤーとの横の距離
 	//パス用
-	let G = -1; //パスの距離の係数
+	let G = 1; //パスの距離の係数
 	let E = 1; //ボールを持っているプレイヤーとディフェンスとの最短距離の係数
 	let F = 1; //パスを受けるプレイヤーとディフェンスとの最短距離の係数
 	//変数の設定
@@ -33,10 +33,11 @@
 		[horizontal_diff_from_ball, vertical_diff_from_ball] = difffromhBallFunc(pos, ball, select, movablelist[i][0], movablelist[i][1]);
 		[defenseLine, attackLine] = PosSortTraverse(pos); //defenseLine,attackLineはそれぞれ左からエージェントのIDをリストにしたもの。
 
-		//		if (vertical_diff_from_ball < 0 && ball != select) {
-		//			eval_list.push(-100);
-		//			continue;
-		//		} //ボールを持っているプレイヤーより前に行かない
+		if (vertical_diff_from_ball < 0 && ball != select) {
+			tempA = -100;
+		} else {
+			tempA = A;
+		} //ボールを持っているプレイヤーより前に行かない
 
 		//		if (distance_defense_min < 2) {
 		//			eval_list.push(-100);
@@ -44,7 +45,7 @@
 		//		}
 
 		eval_list.push(
-			A * back_forth_from_goalline +
+			tempA * back_forth_from_goalline +
 			B * distance_defense_min +
 			C * vertical_diff_from_ball +
 			D * horizontal_diff_from_ball +
