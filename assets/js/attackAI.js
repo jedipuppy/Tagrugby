@@ -32,18 +32,24 @@
 		back_forth_from_goalline = -(movablelist[i][1] - pos[1][select][1]); //ゴールラインに対する前後の移動距離
 		[horizontal_diff_from_ball, vertical_diff_from_ball] = difffromhBallFunc(pos, ball, select, movablelist[i][0], movablelist[i][1]);
 		[defenseLine, attackLine] = PosSortTraverse(pos); //defenseLine,attackLineはそれぞれ左からエージェントのIDをリストにしたもの。
-		if (vertical_diff_from_ball < 0 && ball != select) {
-			A = -100;
-		} //ボールを持っているプレイヤーより前に行かない
 
+		//		if (vertical_diff_from_ball < 0 && ball != select) {
+		//			eval_list.push(-100);
+		//			continue;
+		//		} //ボールを持っているプレイヤーより前に行かない
 
-			eval_list.push(
-				A * back_forth_from_goalline +
-				B * distance_defense_min +
-				C * vertical_diff_from_ball +
-				D * horizontal_diff_from_ball +
-				0.1 * Math.random()
-			);
+		//		if (distance_defense_min < 2) {
+		//			eval_list.push(-100);
+		//			continue;
+		//		}
+
+		eval_list.push(
+			A * back_forth_from_goalline +
+			B * distance_defense_min +
+			C * vertical_diff_from_ball +
+			D * horizontal_diff_from_ball +
+			0.1 * Math.random()
+		);
 	}
 
 	//パスの評価値計算
