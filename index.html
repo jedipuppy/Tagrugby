@@ -49,8 +49,8 @@
                                                 <select name="tag_num" class="form-control">Choose
                                                         <option value="1">1回</option>
                                                         <option value="2">2回</option>
-                                                        <option value="3">3回</option>
-                                                        <option value="4" selected="selected">4回</option>
+                                                        <option value="3" selected="selected">3回</option>
+                                                        <option value="4">4回</option>
                                                         <option value="5">5回</option>
                                                 </select>
                                         </div>
@@ -91,20 +91,14 @@
                                                 <select name="attack_role" class="form-control">Choose
                                                         <option value="human">人</option>
                                                         <option value="AttackAI">AttackAI</option>
-                                                        <option value="AttackSample1">AttackSample1</option>
-                                                        <option value="AttackSample2">AttackSample2</option>
-                                                        <option value="AttackSample3">AttackSample3</option>
-                                                        <option value="AttackSample4">AttackSample4</option>
-                                                        <option value="AttackSample5">AttackSample5</option>
+
                                                 </select>
                                         </div>
                                         <div class="form-group-sm col-sm-3">
                                                 <label for="defense_role" class="col-form-label">ディフェンス</label>
                                                 <select name="defense_role" class="form-control">Choose
                                                         <option value="human">人</option>
-                                                        <option value="DefenseSample1">DefenseSample1</option>
-                                                        <option value="DefenseSample2">DefenseSample2</option>
-                                                        <option value="DefenseSample3">DefenseSample3</option>
+                                                        <option value="DefenseSample1">DefenseAI</option>
                                                 </select>
                                         </div>
                                         <div class="form-group-sm col-sm-3">
@@ -115,22 +109,13 @@
                                                         <option value="2">超高速</option>
                                                 </select>
                                         </div>
-                                        <div class="form-group-sm col-sm-3 config-submit">
+                                        <div class="form-group-sm col-sm-1 config-submit">
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="restart()">設定</button>
                                         </div>
-                                        <div class="form-group-sm col-sm-3">
-                                                <label for="ana_role" class="col-form-label">解析用AI</label>
-                                                <select name="ana_role" class="form-control">Choose
-                                                        <option value="AttackAI">AttackAI</option>
-                                                        <option value="AttackSample1">AttackSample1</option>
-                                                        <option value="AttackSample2">AttackSample2</option>
-                                                        <option value="AttackSample3">AttackSample3</option>
-                                                        <option value="AttackSample4">AttackSample4</option>
-                                                        <option value="AttackSample5">AttackSample5</option>
-                                                </select>
-                                        </div>
-                                        <div class="form-group-sm col-sm-3 config-submit">
+
+                                        <div class="form-group-sm col-sm-1 config-submit">
+                                                        <input type ="hidden" name ="ana_role" value="AttackAI" >
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="analysis()">解析</button>
                                         </div>

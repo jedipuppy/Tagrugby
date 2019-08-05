@@ -2,12 +2,11 @@
 	//移動用
 	let A = 1; //ゴールラインに対する前後の移動距離の係数
 	let B = 1; //ディフェンスとの最短距離の係数
-	let C = 1; //ボールを持っているプレイヤーとの縦の距離
-	let D = 1; //ボールを持っているプレイヤーとの横の距離
 	//パス用
-	let G = 1; //パスの距離の係数
-	let E = 1; //ボールを持っているプレイヤーとディフェンスとの最短距離の係数
-	let F = 1; //パスを受けるプレイヤーとディフェンスとの最短距離の係数
+
+	let C = 1; //ボールを持っているプレイヤーとディフェンスとの最短距離の係数
+	let D = 1; //パスを受けるプレイヤーとディフェンスとの最短距離の係数
+	let E = -1; //パスの距離の係数
 	//変数の設定
 	let forward_param;
 	let eval_list = [];
@@ -47,8 +46,6 @@
 		eval_list.push(
 			tempA * back_forth_from_goalline +
 			B * distance_defense_min +
-			C * vertical_diff_from_ball +
-			D * horizontal_diff_from_ball +
 			0.1 * Math.random()
 		);
 	}
@@ -59,9 +56,9 @@
 		pass_distance = distance(pos[1][i][0] - pos[1][select][0], pos[1][i][1] - pos[1][select][1]); //パスが成功する確率
 		distance_defense_catch_min = Math.min.apply(null, dis_defense_arr_func(pos, passlist[i][0], passlist[i][1])); //パスを受けるプレイヤーとディフェンスとの最短距離
 		eval_list.push(
-			E * distance_defense_throw_min +
-			G * pass_distance +
-			F * distance_defense_catch_min +
+			C * (3 - distance_defense_throw_min) +
+			D * distance_defense_catch_min +
+			E * pass_distance +
 			0.1 * Math.random()
 		);
 	}
