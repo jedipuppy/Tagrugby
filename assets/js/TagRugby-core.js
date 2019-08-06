@@ -502,6 +502,70 @@ let POSDEFENSE = [ //ディフェンスの位置の初期設定
 	[11, 7], //5人目
 ];
 
+let sample = {
+	"1": {
+		"boardsize": 6,
+		"attackpos": [
+			[4, 5]
+		],
+		"defensepos": [
+			[5, 4]
+		]
+	},
+
+	"2": {
+		"boardsize": 6,
+		"attackpos": [
+			[0, 4]
+		],
+		"defensepos": [
+			[4, 2]
+		]
+	},
+	"3": {
+		"boardsize": 6,
+		"attackpos": [
+			[3, 2]
+		],
+		"defensepos": [
+			[3, 4]
+		]
+	},
+	"4": {
+		"boardsize": 6,
+		"attackpos": [
+			[0, 3],
+			[5, 3]
+		],
+		"defensepos": [
+			[1, 1],
+			[2, 1]
+		]
+	},
+	"5": {
+		"boardsize": 6,
+		"attackpos": [
+			[0, 3],
+			[4, 3]
+		],
+		"defensepos": [
+			[1, 1],
+			[3, 1]
+		]
+	},
+	"6": {
+		"boardsize": 6,
+		"attackpos": [
+			[0, 3],
+			[5, 3]
+		],
+		"defensepos": [
+			[2, 1],
+			[2, 2]
+		]
+	},
+}
+
 //----------------------------------------
 //----------------------------------------
 // ゲームを制御するクラス
@@ -976,7 +1040,16 @@ function gameOver(result_Diff, x, y) {
 }
 
 
-
+//----------------------------------------
+// サンプル設定ボタンをおした時の動作
+//----------------------------------------
+function sampleset() {
+	sample_num = parseInt(document.SampleForm.samplenum.value);
+	BOARDSIZE = sample[sample_num].boardsize;
+	POSATTACK = sample[sample_num].attackpos;
+	POSDEFENSE = sample[sample_num].defensepos;
+	rematchInit();
+}
 
 
 //----------------------------------------
