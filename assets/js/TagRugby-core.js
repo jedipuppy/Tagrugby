@@ -454,7 +454,11 @@ let ANALYSISSIZE = 20; //解析結果の数字の大きさ
 const boardWordHor = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20');
 const boardWordVer = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'V', 'W', 'X');
 
+<<<<<<< HEAD
 let MAXTAG = 4; //この回数タグをとられるとアタックの負け。
+=======
+let MAXTAG = 3; //この回数タグをとられるとアタックの負け。
+>>>>>>> origin/master
 const CATCH_PROBABILITY_LIST = [1, 1, 1, 1, 1, 0.8, 0.8, 0.6, 0.6, 0.4, 0.4]; //キャッチできる確率
 const MAX_PASS_LENGTH = CATCH_PROBABILITY_LIST.length - 1; //ボールが投げられる最大距離
 //変数
