@@ -19,9 +19,91 @@ let rugby_AI = [];
 
 
 rugby_AI.AttackAI = function (pos, turn, select, ball, tagged) {
-	let return_arr;
-	eval(editor.getValue());
-	return return_arr;
+//	let return_arr;
+//	eval(editor.getValue());
+//	return return_arr;
+
+	//変数の設定
+	let forward_param;
+	let eval_list = [];
+	let action_list = [];
+	let movablelist = movablelistFunc(pos, turn, select, tagged);
+	let passlist = passlistFunc(pos, turn, select, ball);
+	action_list = action_list.concat(movablelist);
+	action_list = action_list.concat(passlist);
+	[checkmateFlag, x, y] = CheckMateFunc(pos, turn, select, ball);
+
+	//トライorインターセプトができる場合はその行動を返す
+	if (checkmateFlag == 1) {
+		return_arr = [[x, y], eval_list];
+	}
+
+	//移動の評価値計算
+	for (let i = 0; i < movablelist.length; i++) {
+		distance_defense = dis_defense_arr_func(
+			pos,
+			movablelist[i][0],
+			movablelist[i][1]
+		); //ディフェンスとの距離リスト
+		distance_defense_min = Math.min.apply(null, distance_defense); //ディフェンスとの最小距離
+		back_forth_from_goalline = -(movablelist[i][1] - pos[1][select][1]); //ゴールラインに対する前後の移動距離
+		[horizontal_diff_from_ball, vertical_diff_from_ball] = difffromhBallFunc(
+			pos,
+			ball,
+			select,
+			movablelist[i][0],
+			movablelist[i][1]
+		);
+		[defenseLine, attackLine] = PosSortTraverse(pos); //defenseLine,attackLineはそれぞれ左からエージェントのIDをリストにしたもの。
+
+		if (vertical_diff_from_ball < 0 && ball != select) {
+			tempA = -100;
+		} else {
+			tempA = A;
+		} //ボールを持っているプレイヤーより前に行かない
+
+		//		if (distance_defense_min < 2) {
+		//			eval_list.push(-100);
+		//			continue;
+		//		}
+
+		eval_list.push(
+			tempA * back_forth_from_goalline +
+			B * distance_defense_min +
+			0.1 * Math.random()
+		);
+	}
+
+	//パスの評価値計算
+	for (let i = 0; i < passlist.length; i++) {
+		distance_defense_throw_min = Math.min.apply(
+			null,
+			dis_defense_arr_func(pos, pos[1][select][0], pos[1][select][1])
+		); //ボールを持っているプレイヤーとディフェンスとの最短距離
+		pass_distance = distance(
+			pos[1][i][0] - pos[1][select][0],
+			pos[1][i][1] - pos[1][select][1]
+		); //パスが成功する確率
+		distance_defense_catch_min = Math.min.apply(
+			null,
+			dis_defense_arr_func(pos, passlist[i][0], passlist[i][1])
+		); //パスを受けるプレイヤーとディフェンスとの最短距離
+		eval_list.push(
+			C * distance_defense_catch_min +
+			D * (3 - distance_defense_throw_min) +
+			E * pass_distance +
+			0.1 * Math.random()
+		);
+	}
+	
+	best_move_index = eval_list.indexOf(Math.max.apply(null, eval_list));
+	best_move_array = [
+		action_list[best_move_index][0],
+		action_list[best_move_index][1]
+	];
+	return [best_move_array, eval_list];
+
+
 }
 
 // sample1：ランダムに行動する
@@ -444,21 +526,25 @@ function disDefense(x, y, pos) {
 // パラメータの設定
 //----------------------------------------
 //----------------------------------------
+//係数の設定
+//移動用
+let A = 0; //ゴールラインに対する前後の移動距離の係数
+let B = 1; //ディフェンスとの最短距離の係数
+//パス用
 
+let C = 1; //パスを受けるプレイヤーとディフェンスとの最短距離の係数
+let D = 1; //ボールを持っているプレイヤーとディフェンスとの最短距離の係数
+let E = 1; //パスの距離の係数
 //定数
 let BOARDSIZE = 20;
 let BLOCKSIZE = 30; // １マスのサイズ
 let CANVASSIZE = 600; // ボードのサイズ
 const NUMSIZE = 20; // ボード横の番号幅
 let ANALYSISSIZE = 20; //解析結果の数字の大きさ
-const boardWordHor = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20');
+const boardWordHor = new Array('', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20');
 const boardWordVer = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'V', 'W', 'X');
 
-<<<<<<< HEAD
 let MAXTAG = 4; //この回数タグをとられるとアタックの負け。
-=======
-let MAXTAG = 3; //この回数タグをとられるとアタックの負け。
->>>>>>> origin/master
 const CATCH_PROBABILITY_LIST = [1, 1, 1, 1, 1, 0.8, 0.8, 0.6, 0.6, 0.4, 0.4]; //キャッチできる確率
 const MAX_PASS_LENGTH = CATCH_PROBABILITY_LIST.length - 1; //ボールが投げられる最大距離
 //変数
@@ -477,16 +563,16 @@ let Role = ['human', 'human', 'sample1']; // 思考（Role[0]がディフェン�
 
 //色
 BOARDCOLOR = "#f4f8ff";
-ATTACKFILLCOLOR = "#000000";
+ATTACKFILLCOLOR = "#D11036";
 ATTACKBORDERCOLOR = "#000000";
-DEFENSEFILLCOLOR = "#ffffff";
+DEFENSEFILLCOLOR = "#3FB6EA";
 DEFENSEBORDERCOLOR = "#000000";
 BOARDERCOLOR = "#3f3f3f";
 BACKGROUNDCOLOR = "#ffffff";
 FONTCOLOR = "#3f3f3f";
 ANAMOVEFONTCOLOR = "#3f3f3f";
 ANAPASSFONTCOLOR = "#ffffff";
-INGOALCOLOR = "#e5edfc";
+INGOALCOLOR = "#BDDEF2";
 BALLCOLOR = "#c65353";
 SELECTDISC = "#3f3f3f";
 FINALDISC = "#c65353";
@@ -674,6 +760,7 @@ class Game {
 		try {
 			[nextmove, eval_list] = rugby_AI[AI_name](this.pos, this.turn, this.select, this.ball, this.tagged); //AIの呼び出し、盤面から最善手及びそれぞれの評価値を返す
 		} catch (err) {
+			console.error(err.message);
 			document.getElementById('pass').innerHTML = '動けるところがないので1回休み' + err;
 		}
 		if (nextmove == [] || typeof nextmove[0] === "undefined" || typeof nextmove[1] === "undefined") {
@@ -888,6 +975,10 @@ function canvas_resize() {
 //----------------------------------------
 function init() {
 
+
+
+	//Sliderを設定
+	initSlider();
 	//イベントリスナの設定
 	// マウスが動くとmoveMouseを呼び出す
 	canvas.onmousemove = function (event) {
@@ -1152,11 +1243,11 @@ function draw(ctx, canvas) {
 	}
 
 	//ボールの表示
-	ctx.beginPath();
-	ctx.fillStyle = BALLCOLOR;
-	ctx.arc(game.pos[1][game.ball][0] * BLOCKSIZE + ~~(BLOCKSIZE * 0.5) + NUMSIZE + 0.5, game.pos[1][game.ball][1] * BLOCKSIZE + ~~(BLOCKSIZE * 0.5) + NUMSIZE + 0.5, BLOCKSIZE / 2 * 0.4, 0, 2 * Math.PI, false);
-	ctx.fill();
-	ctx.stroke();
+	let ball = new Image();
+	ball.src = './assets/img/ball.svg';
+	ball.onload = function () {
+		ctx.drawImage(ball, game.pos[1][game.ball][0] * BLOCKSIZE + ~~(BLOCKSIZE * 0.5) + NUMSIZE + 0.5 - BLOCKSIZE * 0.3, game.pos[1][game.ball][1] * BLOCKSIZE + ~~(BLOCKSIZE * 0.5) + NUMSIZE + 0.5 - BLOCKSIZE * 0.3, BLOCKSIZE * 0.6, BLOCKSIZE * 0.6);
+	}
 
 	// ボード脇の色を設定
 	ctx.beginPath();
@@ -1216,6 +1307,8 @@ function draw(ctx, canvas) {
 	if (game.tagged == 1) {
 		ctx.fillText('タグを取られたので、ボールを投げる', game.pos[1][game.ball][0] * BLOCKSIZE + ~~(BLOCKSIZE * 0.5) + NUMSIZE + 0.5, game.pos[1][game.ball][1] * BLOCKSIZE + ~~(BLOCKSIZE * 0.5) + NUMSIZE + 0.5);
 	}
+	console.log("test");
+
 }
 
 
@@ -1419,4 +1512,68 @@ function execPost(action, name, data1, data2) {
 	// submit
 	form.submit();
 	return false;
+}
+
+function initSlider() {
+let sliderA = new rSlider({
+	target: '#sliderA',
+	values: [0, 1, 2, 3, 4, 5],
+	range: false,
+	set: [1],
+	tooltip: false,
+	onChange: function (vals) {
+		console.log(vals);
+		A = vals;
+	}
+});
+
+	let sliderB = new rSlider({
+		target: '#sliderB',
+		values: [0, 1, 2, 3, 4, 5],
+		range: false,
+		set: [1],
+		tooltip: false,
+		onChange: function (vals) {
+			console.log(vals);
+			B = vals;
+		}
+	});
+
+	let sliderC = new rSlider({
+		target: '#sliderC',
+		values: [0, 1, 2, 3, 4, 5],
+		range: false,
+		set: [1],
+		tooltip: false,
+		onChange: function (vals) {
+			console.log(vals);
+			C = vals;
+		}
+	});
+
+	let sliderD = new rSlider({
+		target: '#sliderD',
+		values: [0, 1, 2, 3, 4, 5],
+		range: false,
+		set: [1],
+		tooltip: false,
+		onChange: function (vals) {
+			console.log(vals);
+			D = vals;
+		}
+	});
+
+	let sliderE = new rSlider({
+		target: '#sliderE',
+		values: [0, 1, 2, 3, 4, 5],
+		range: false,
+		set: [1],
+		tooltip: false,
+		onChange: function (vals) {
+			console.log(vals);
+			E = vals;
+		}
+	});
+
+
 }
