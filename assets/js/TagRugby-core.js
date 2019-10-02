@@ -19,9 +19,9 @@ let rugby_AI = [];
 
 
 rugby_AI.AttackAI = function (pos, turn, select, ball, tagged) {
-//	let return_arr;
-//	eval(editor.getValue());
-//	return return_arr;
+	//	let return_arr;
+	//	eval(editor.getValue());
+	//	return return_arr;
 
 	//変数の設定
 	let forward_param;
@@ -35,7 +35,9 @@ rugby_AI.AttackAI = function (pos, turn, select, ball, tagged) {
 
 	//トライorインターセプトができる場合はその行動を返す
 	if (checkmateFlag == 1) {
-		return_arr = [[x, y], eval_list];
+		return_arr = [
+			[x, y], eval_list
+		];
 	}
 
 	//移動の評価値計算
@@ -95,7 +97,7 @@ rugby_AI.AttackAI = function (pos, turn, select, ball, tagged) {
 			0.1 * Math.random()
 		);
 	}
-	
+
 	best_move_index = eval_list.indexOf(Math.max.apply(null, eval_list));
 	best_move_array = [
 		action_list[best_move_index][0],
@@ -548,7 +550,7 @@ let MAXTAG = 4; //この回数タグをとられるとアタックの負け。
 const CATCH_PROBABILITY_LIST = [1, 1, 1, 1, 1, 0.8, 0.8, 0.6, 0.6, 0.4, 0.4]; //キャッチできる確率
 const MAX_PASS_LENGTH = CATCH_PROBABILITY_LIST.length - 1; //ボールが投げられる最大距離
 //変数
-let DELAYDURATION = 700; // 打ってから反映するまでの時間
+let DELAYDURATION = 1500; // 打ってから反映するまでの時間
 let ENDDURATION = 1000; // AI同士でげーむ終了してから次のゲーム開始までの時間
 let mouseX = 0; // マウスの横方向座標
 let mouseY = 0; // マウスの縦方向座標
@@ -563,16 +565,16 @@ let Role = ['human', 'human', 'sample1']; // 思考（Role[0]がディフェン�
 
 //色
 BOARDCOLOR = "#f4f8ff";
-ATTACKFILLCOLOR = "#D11036";
+ATTACKFILLCOLOR = "#3FB6EA";
 ATTACKBORDERCOLOR = "#000000";
-DEFENSEFILLCOLOR = "#3FB6EA";
+DEFENSEFILLCOLOR = "#D11036";
 DEFENSEBORDERCOLOR = "#000000";
 BOARDERCOLOR = "#3f3f3f";
 BACKGROUNDCOLOR = "#ffffff";
 FONTCOLOR = "#3f3f3f";
 ANAMOVEFONTCOLOR = "#3f3f3f";
 ANAPASSFONTCOLOR = "#ffffff";
-INGOALCOLOR = "#BDDEF2";
+INGOALCOLOR = "#F27575";
 BALLCOLOR = "#c65353";
 SELECTDISC = "#3f3f3f";
 FINALDISC = "#c65353";
@@ -1086,7 +1088,7 @@ function restart() {
 	//	ゲームスピードを設定する
 	game_speed = document.ControlForm.game_speed.value;
 	if (game_speed == 0) { //低速
-		DELAYDURATION = 1000;
+		DELAYDURATION = 1500;
 		ENDDURATION = 1000;
 	} else if (game_speed == 1) { //高速
 		DELAYDURATION = 100;
@@ -1152,13 +1154,8 @@ function sampleset() {
 //----------------------------------------
 function moveMouse(event) {
 	// マウス座標の取得
-	if (event) {
-		mouseX = event.pageX - canvas.offsetLeft;
-		mouseY = event.pageY - canvas.offsetTop;
-	} else {
-		mouseX = event.offsetX;
-		mouseY = event.offsetY;
-	}
+	mouseX = event.offsetX;
+	mouseY = event.offsetY;
 
 	// 実座標
 	mouseX = ~~(mouseX / canvas.offsetWidth * (CANVASSIZE + NUMSIZE));
@@ -1515,65 +1512,36 @@ function execPost(action, name, data1, data2) {
 }
 
 function initSlider() {
-let sliderA = new rSlider({
-	target: '#sliderA',
-	values: [0, 1, 2, 3, 4, 5],
-	range: false,
-	set: [1],
-	tooltip: false,
-	onChange: function (vals) {
-		console.log(vals);
-		A = vals;
+	let sliderA = new rSlider({
+		target: '#sliderA',
+		values: [0, 1, 2, 3, 4, 5],
+		range: false,
+		set: [1],
+		tooltip: true,
+		onChange: function (vals) {
+
+		}
+	});
+
+}
+
+function refreshParameter(source, param) {
+	console.log(param);
+	if (source == 1) {
+		A = param;
+	} else if (source == 2) {
+		B = param;
+	} else if (source == 3) {
+		C = param;
+	} else if (source == 4) {
+		D = param;
+	} else if (source == 5) {
+		E = param;
 	}
-});
+	document.getElementById("span-param" + source).innerHTML = param;
 
-	let sliderB = new rSlider({
-		target: '#sliderB',
-		values: [0, 1, 2, 3, 4, 5],
-		range: false,
-		set: [1],
-		tooltip: false,
-		onChange: function (vals) {
-			console.log(vals);
-			B = vals;
-		}
-	});
-
-	let sliderC = new rSlider({
-		target: '#sliderC',
-		values: [0, 1, 2, 3, 4, 5],
-		range: false,
-		set: [1],
-		tooltip: false,
-		onChange: function (vals) {
-			console.log(vals);
-			C = vals;
-		}
-	});
-
-	let sliderD = new rSlider({
-		target: '#sliderD',
-		values: [0, 1, 2, 3, 4, 5],
-		range: false,
-		set: [1],
-		tooltip: false,
-		onChange: function (vals) {
-			console.log(vals);
-			D = vals;
-		}
-	});
-
-	let sliderE = new rSlider({
-		target: '#sliderE',
-		values: [0, 1, 2, 3, 4, 5],
-		range: false,
-		set: [1],
-		tooltip: false,
-		onChange: function (vals) {
-			console.log(vals);
-			E = vals;
-		}
-	});
-
-
+	//戦歴をリセットする
+	document.getElementById('attack_win_num').innerHTML = 0;
+	document.getElementById('defense_win_num').innerHTML = 0;
+	document.getElementById('tag').innerHTML = MAXTAG;
 }

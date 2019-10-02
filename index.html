@@ -13,9 +13,9 @@
                 crossorigin="anonymous">
         <link rel="stylesheet" href="assets/css/custom.css">
 
-                <!-- Range -->
-  <link rel="stylesheet" type="text/css" href="./assets/range/css/rSlider.min.css">
-  <script src="./assets/range/js/rSlider.min.js"></script>
+        <!-- Range -->
+        <link rel="stylesheet" type="text/css" href="./assets/range/css/rSlider.min.css">
+        <script src="./assets/range/js/rSlider.min.js"></script>
 
         <!-- CodeMirror -->
         <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css">
@@ -28,157 +28,200 @@
 </head>
 
 <body>
-        <div class="contents">
-                <nav class="navbar navbar-dark bg-dark">
+        <header>
+                <nav class="navbar navbar-dark bg-dark fixed-top">
                         <a class="navbar-brand" href="#">
                                 <img src="assets/img/rugby-ball.svg" width="20" height="30"
-                                        class="d-inline-block align-top" alt="">
-                                TagRugby AI Platform
+                                        class="d-inline-block align-top" alt=""> TagRugby AI Platform
                         </a>
                 </nav>
-                <div class="config shadow-sm">
-                        <form name="ConfigForm">
-                                <div class="form-row">
-                                        <div class="form-group-sm col-sm-2">
-                                                <label for="boardsize" class="col-form-label">盤面サイズ</label>
-                                                <select name="boardsize" class="form-control">Choose
-                                                        <option value="8">8×8</option>
-                                                        <option value="12">12×12</option>
-                                                        <option value="16">16×16</option>
-                                                        <option value="20" selected="selected">20×20</option>
-                                                </select>
-                                        </div>
-                                        <div class="form-group-sm col-sm-2">
-                                                <label for="tag_num" class="col-form-label">タグの回数</label>
-                                                <select name="tag_num" class="form-control">Choose
-                                                        <option value="1">1回</option>
-                                                        <option value="2">2回</option>
-<<<<<<< HEAD
-                                                        <option value="3">3回</option>
-                                                        <option value="4" selected="selected">4回</option>
-=======
-                                                        <option value="3" selected="selected">3回</option>
-                                                        <option value="4">4回</option>
->>>>>>> origin/master
-                                                        <option value="5">5回</option>
-                                                </select>
-                                        </div>
-                                        <div class="form-group-sm col-sm-3">
-                                                <label for="attackNum" class="col-form-label">アタック</label>
-                                                <select name="attackNum" class="form-control">Choose
-                                                        <option value="1">1人</option>
-                                                        <option value="2">2人</option>
-                                                        <option value="3">3人</option>
-                                                        <option value="4">4人</option>
-                                                        <option value="5" selected="selected">5人</option>
-                                                </select>
-                                        </div>
-                                        <div class="form-group-sm col-sm-3">
-                                                <label for="defenseNum" class="col-form-label">ディフェンス</label>
-                                                <select name="defenseNum" class="form-control">Choose
-                                                        <option value="1">1人</option>
-                                                        <option value="2">2人</option>
-                                                        <option value="3">3人</option>
-                                                        <option value="4">4人</option>
-                                                        <option value="5" selected="selected">5人</option>
-                                                </select>
-                                        </div>
+        </header>
+        <div class="contents">
 
-                                        <div class="form-group-sm col-sm-2 config-submit">
-                                                <button type="button" class="btn btn-primary"
-                                                        onclick="config()">設定</button>
-                                        </div>
-                                </div>
-                        </form>
-                </div>
 
-                <div class="control shadow-sm">
+                <div class="control shadow-sm bg-white m-3 p-3">
                         <form name="ControlForm">
                                 <div class="form-row">
                                         <div class="form-group-sm col-sm-3">
-                                                <label for="attack_role" class="col-form-label">アタック</label>
+                                                <label for="attack_role" class="col-form-label">せめ手</label>
                                                 <select name="attack_role" class="form-control">Choose
                                                         <option value="human">人</option>
-                                                        <option value="AttackAI">AttackAI</option>
+                                                        <option value="AttackAI">AI</option>
 
                                                 </select>
                                         </div>
                                         <div class="form-group-sm col-sm-3">
-                                                <label for="defense_role" class="col-form-label">ディフェンス</label>
+                                                <label for="defense_role" class="col-form-label">守り手</label>
                                                 <select name="defense_role" class="form-control">Choose
                                                         <option value="human">人</option>
-                                                        <option value="DefenseSample2">DefenseAI</option>
+                                                        <option value="DefenseSample2">AI</option>
                                                 </select>
                                         </div>
-                                        <div class="form-group-sm col-sm-3">
+                                        <div class="form-group-sm col-sm-2">
                                                 <label for="game_speed" class="col-form-label">速さ</label>
                                                 <select name="game_speed" class="form-control">Choose
                                                         <option value="0">低速</option>
                                                         <option value="1">高速</option>
                                                 </select>
                                         </div>
-                                        <div class="form-group-sm col-sm-1 config-submit">
-                                                <button type="button" class="btn btn-primary"
+                                        <div class="form-group-sm col-sm-2 config-submit">
+                                                <button type="button" class="btn btn-primary w-100 h-100"
                                                         onclick="restart()">設定</button>
                                         </div>
 
-                                        <div class="form-group-sm col-sm-1 config-submit">
-                                                        <input type ="hidden" name ="ana_role" value="AttackAI" >
-                                                <button type="button" class="btn btn-primary"
-                                                        onclick="analysis()">解析</button>
+                                        <div class="form-group-sm col-sm-2 config-submit">
+                                                <input type="hidden" name="ana_role" value="AttackAI">
+                                                <button type="button" class="btn btn-primary w-100 h-100"
+                                                        onclick="analysis()">解せき</button>
                                         </div>
                                 </div>
                         </form>
                 </div>
-                <div class="boardarea shadow-sm">
+                <div class="row">
+                        <div class=" col-md-8">
 
-                        <div>
-                                <canvas id="canvas"></canvas>
-                        </div>
-                        <div class="row status">
-                                <div class="param col-sm-4 name">アタック勝利数：</div>
-                                <div class="param col-sm-1 data" id="attack_win_num">0</div>
-                                <div class="param col-sm-4 name">ディフェンス勝利数：</div>
-                                <div class="param col-sm-1 data" id="defense_win_num">0</div>
-                                <div class="param col-sm-4 name">残りタグ：</div>
-                                <div class="param col-sm-1 data" id="tag">0</div>
-                                <div class="param col-sm-6 data" id="pass" style="color:#C44A48"></div>
-                                <div class="param col-sm-6 data" id="result" style="color:#C44A48"></div>
-                        </div>
-                </div>
-                <div class="codingarea shadow-sm">
-                        <form name="CodingForm">
-                                <div>
-                                      <label>A</label>
-      <input type="text" id="sliderA" class="slider" />
-                                      <label>B</label>
-      <input type="text" id="sliderB" class="slider" />
-                                            <label>C</label>
-      <input type="text" id="sliderC" class="slider" />
-                                            <label>D</label>
-      <input type="text" id="sliderD" class="slider" />
-                                            <label>E</label>
-      <input type="text" id="sliderE" class="slider" />
-                                </div>
-                </div>
-                </form>
-                <div class="config shadow-sm">
-                        <form name="SampleForm">
-                                <div class="form-row">
-                                        <div class="form-group-sm col-sm-6">
-                                                <label for="samplenum" class="col-form-label">サンプル</label>
-                                                <select name="samplenum" class="form-control">Choose
-                                                        <option value="1">1対1 (1)</option>
-                                                        <option value="2">1対1 (2)</option>
-                                                        <option value="3">1対1 (3)</option>
-                                                        <option value="4">2対2 (1)</option>
-                                                        <option value="5">2対2 (2)</option>
-                                                        <option value="6">2対2 (3)</option>
-                                                </select>
+                                <div class="shadow-sm boardarea  bg-white p-3 mt-3 mr-1 ml-3">
+                                        <canvas id="canvas"></canvas>
+                                        <div class="row status">
+                                                <div class="param col-sm-4 name">せめ手勝利数：</div>
+                                                <div class="param col-sm-1 data" id="attack_win_num">0</div>
+                                                <div class="param col-sm-4 name">守り手勝利数：</div>
+                                                <div class="param col-sm-1 data" id="defense_win_num">0</div>
+                                                <div class="param col-sm-4 name">残りタグ：</div>
+                                                <div class="param col-sm-1 data" id="tag">0</div>
+                                                <div class="param col-sm-6 data" id="pass" style="color:#C44A48"></div>
+                                                <div class="param col-sm-6 data" id="result" style="color:#C44A48">
+                                                </div>
+
                                         </div>
+
                                 </div>
-                        </form>
+                        </div>
+                        <div class=" col-md-4">
+                                <form name="CodingForm">
+                                        <div class="codingarea shadow-sm bg-white p-5 mt-3 ml-1 mr-3">
+                                                <div class="container">
+                                                        <div class="form-group">
+                                                                <label for="label-param1">A（〇〇〇〇〇〇〇〇な気持ち）：<span
+                                                                                id="span-param1">1</span>
+                                                                </label>
+                                                                <input type="range" class="form-control-range"
+                                                                        id="input-param1" min="0" max="5" value="1"
+                                                                        step="1"
+                                                                        onchange="refreshParameter(1,this.value)">
+                                                                <label for="label-param2">B（〇〇〇〇〇〇〇〇な気持ち）：<span
+                                                                                id="span-param2">1</span>
+                                                                </label>
+                                                                <input type="range" class="form-control-range"
+                                                                        id="input-param2" min="0" max="5" value="1"
+                                                                        step="1"
+                                                                        onchange="refreshParameter(2,this.value)">
+                                                                <label for="label-param3">C（〇〇〇〇〇〇〇〇な気持ち）：<span
+                                                                                id="span-param3">1</span>
+                                                                </label>
+                                                                <input type="range" class="form-control-range"
+                                                                        id="input-param3" min="0" max="5" value="1"
+                                                                        step="1"
+                                                                        onchange="refreshParameter(4,this.value)">
+                                                                <label for="label-param4">D（〇〇〇〇〇〇〇〇な気持ち）：<span
+                                                                                id="span-param4">1</span>
+                                                                </label>
+                                                                <input type="range" class="form-control-range"
+                                                                        id="input-param5" min="0" max="5" value="1"
+                                                                        step="1"
+                                                                        onchange="refreshParameter(5,this.value)">
+                                                                <label for="label-param5">E（〇〇〇〇〇〇〇〇な気持ち）：<span
+                                                                                id="span-param5">1</span>
+                                                                </label>
+                                                                <input type="range" class="form-control-range"
+                                                                        id="input-param1" min="0" max="5" value="1"
+                                                                        step="1"
+                                                                        onchange="refreshParameter(5,this.value)">
+
+                                                        </div>
+
+                                                </div>
+
+                                </form>
+                        </div>
                 </div>
+        </div>
+
+
+        <div class="config shadow-sm m-3 bg-white p-3">
+                <form name="ConfigForm">
+                        <div class="form-row">
+                                <div class="form-group-sm col-sm-2">
+                                        <label for="boardsize" class="col-form-label">ばん面サイズ</label>
+                                        <select name="boardsize" class="form-control">Choose
+                                                <option value="8">8×8</option>
+                                                <option value="12">12×12</option>
+                                                <option value="16">16×16</option>
+                                                <option value="20" selected="selected">20×20</option>
+                                        </select>
+                                </div>
+                                <div class="form-group-sm col-sm-2">
+                                        <label for="tag_num" class="col-form-label">タグの回数</label>
+                                        <select name="tag_num" class="form-control">Choose
+                                                <option value="1">1回</option>
+                                                <option value="2">2回</option>
+                                                <option value="4" selected="selected">4回</option>
+                                                <option value="4">4回</option>
+                                                <option value="5">5回</option>
+                                        </select>
+                                </div>
+                                <div class="form-group-sm col-sm-3">
+                                        <label for="attackNum" class="col-form-label">せめ手</label>
+                                        <select name="attackNum" class="form-control">Choose
+                                                <option value="1">1人</option>
+                                                <option value="2">2人</option>
+                                                <option value="3">3人</option>
+                                                <option value="4">4人</option>
+                                                <option value="5" selected="selected">5人</option>
+                                        </select>
+                                </div>
+                                <div class="form-group-sm col-sm-3">
+                                        <label for="defenseNum" class="col-form-label">守り手</label>
+                                        <select name="defenseNum" class="form-control">Choose
+                                                <option value="1">1人</option>
+                                                <option value="2">2人</option>
+                                                <option value="3">3人</option>
+                                                <option value="4">4人</option>
+                                                <option value="5" selected="selected">5人</option>
+                                        </select>
+                                </div>
+
+                                <div class="form-group-sm col-sm-2 config-submit">
+                                        <button type="button" class="btn btn-primary w-100 h-100"
+                                                onclick="config()">設定</button>
+                                </div>
+                        </div>
+                </form>
+        </div>
+
+        <div class="config shadow-sm p-3 m-3 bg-white">
+                <form name="SampleForm">
+                        <div class="form-row">
+                                <div class="form-group-sm col-sm-8">
+                                        <label for="samplenum" class="col-form-label">サンプル</label>
+                                        <select name="samplenum" class="form-control">Choose
+                                                <option value="1">1対1 (1)</option>
+                                                <option value="2">1対1 (2)</option>
+                                                <option value="3">1対1 (3)</option>
+                                                <option value="4">2対2 (1)</option>
+                                                <option value="5">2対2 (2)</option>
+                                                <option value="6">2対2 (3)</option>
+                                        </select>
+
+
+                                </div>
+                                <div class="col-sm-4">
+                                        <button type="button" class="btn btn-primary w-100 h-100"
+                                                onclick="sampleset()">設定</button>
+                                </div>
+                        </div>
+                </form>
+        </div>
         </div>
 
         </div>
@@ -190,16 +233,16 @@
         //----------------------------------------
         // CodeMirrorの設定
         //----------------------------------------
-//        let editor = CodeMirror.fromTextArea(document.CodingForm.attackAIfunc, {
-//               lineNumbers: true,
-//             mode: "javascript"
-//        })
-//        editor.setValue(loadAI());
-//        let pos_editor = CodeMirror.fromTextArea(document.CodingForm.initial_pos, {
-//                lineNumbers: true,
-//                mode: "javascript"
-//        })
-//        pos_editor.setValue(loadpos());
+        //        let editor = CodeMirror.fromTextArea(document.CodingForm.attackAIfunc, {
+        //               lineNumbers: true,
+        //             mode: "javascript"
+        //        })
+        //        editor.setValue(loadAI());
+        //        let pos_editor = CodeMirror.fromTextArea(document.CodingForm.initial_pos, {
+        //                lineNumbers: true,
+        //                mode: "javascript"
+        //        })
+        //        pos_editor.setValue(loadpos());
         //----------------------------------------
         // 初期配置の読み込み
         //----------------------------------------
