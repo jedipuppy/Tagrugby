@@ -742,8 +742,8 @@ let sample = {
   },
   3: {
     boardsize: 6,
-    attackpos: [[3, 2]],
-    defensepos: [[3, 4]],
+    attackpos: [[3, 4]],
+    defensepos: [[3, 2]],
   },
   4: {
     boardsize: 6,
@@ -771,11 +771,11 @@ let sample = {
     boardsize: 6,
     attackpos: [
       [0, 3],
-      [5, 3],
+      [4, 3],
     ],
     defensepos: [
-      [2, 1],
       [2, 2],
+      [3, 4],
     ],
   },
 };
